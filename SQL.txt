@@ -1,0 +1,39 @@
+-- Crear base de datos
+CREATE DATABASE sistema_cursos;
+USE sistema_cursos;
+
+-- Tabla de Cursos
+CREATE TABLE cursos (
+    id_curso INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    duracion VARCHAR(50),
+    precio DECIMAL(10,2),
+    fecha_inicio DATE,
+    cupos_disponibles INT
+);
+
+-- Tabla de Usuarios
+CREATE TABLE usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_completo VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    telefono VARCHAR(20),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de Inscripciones
+CREATE TABLE inscripciones (
+    id_inscripcion INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    id_curso INT,
+    fecha_inscripcion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
+);
+
+-- Insertar algunos cursos de ejemplo
+INSERT INTO cursos (nombre, descripcion, duracion, precio, fecha_inicio, cupos_disponibles) VALUES
+('Desarrollo Web Fullstack', 'Aprende desarrollo web desde cero', '6 meses', 499.99, '2024-02-01', 25),
+('Diseño UX/UI', 'Curso completo de diseño de experiencia de usuario', '4 meses', 399.99, '2024-03-15', 20),
+('Marketing Digital', 'Estrategias de marketing en redes sociales', '3 meses', 299.99, '2024-04-01', 30);
